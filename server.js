@@ -20,13 +20,26 @@ mongoose.connection
     .on('close', () => console.log('Disconnected from Mongoose'))
     .on('error', (error) => console.log("An error occured: \n", error))
 
-    const app = express()
+const app = express()
 
-    ////////////////////////////////////////
-    //Middleware
-    ///////////////////////////////////////
+////////////////////////////////////////
+//Middleware
+///////////////////////////////////////
 
-    app.use(morgan("tiny"))
-    app.use(express.urlencoded({extended: true}))
-    app.use(express.static("public"))
-    app.use(express.json())
+app.use(morgan("tiny"))
+app.use(express.urlencoded({extended: true}))
+app.use(express.static("public"))
+app.use(express.json())
+
+
+/////////////////////////////////
+// ROUTES aka where I get my kicks
+////////////////////////////////
+
+app.get("/", (req, res) => {
+    res.send("Your server is running, check the fridge too")
+})
+
+
+const PORT = process.env.PORT
+app.listen(PORT, () => console.log(`Now listening to the sweet sounds of ${PORT}`))
