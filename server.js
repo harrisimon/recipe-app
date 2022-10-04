@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
     res.send("Your server is running, check the fridge too")
 })
 
-app.use('/recipe', RecipeRouter)
+app.use('/recipes', RecipeRouter)
 app.use('/users', UserRouter)
 
 //////////////////////////////////
