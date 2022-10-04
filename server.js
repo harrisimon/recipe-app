@@ -5,21 +5,18 @@ require("dotenv").config() // Load ENV Variables
 const express = require("express") // import express
 
 const path = require("path") // import path module
-const morgan = require("morgan") // import morgan
-const middleware = require('./utils/middlware')
 const RecipeRouter = require('./controllers/recipeControllers')
 const UserRouter = require('./controllers/userControllers')
-// const Recipe = require('./models/recipe')
+const middleware = require('./utils/middleware')
 
 
-
-
+///////////////////////
+// Express object
 const app = express()
 
 ////////////////////////////////////////
 //Middleware
 ///////////////////////////////////////
-
 middleware(app)
 
 

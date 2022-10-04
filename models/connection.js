@@ -14,7 +14,7 @@ const CONFIG = {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }
-// establish our connection
+// establish the connection
 mongoose.connect(DATABASE_URL, CONFIG)
 
 

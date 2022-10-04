@@ -14,7 +14,7 @@ const router = express.Router()
 /////////////////////////////////////////////
 
 // GET request
-router.get("/recipes", (req, res) => {
+router.get("/", (req, res) => {
     Recipe.find({})
     .then(recipe => {
         res.json({recipe: recipe})
@@ -23,7 +23,7 @@ router.get("/recipes", (req, res) => {
 })
 
 // POST request
-router.post("/recipes", (req, res) => {
+router.post("/", (req, res) => {
     Recipe.create(req.body)
         .then(recipe => {
             res.status(201).json({recipe: recipe.toObject()})
@@ -32,7 +32,7 @@ router.post("/recipes", (req, res) => {
 })
 
 // PUT request
-router.put("/recipes/:id", (req, res) => {
+router.put("/:id", (req, res) => {
     const id = req.params.id
 
     Recipe.findByIdAndUpdate(id, req.body, {new: true})
@@ -44,7 +44,7 @@ router.put("/recipes/:id", (req, res) => {
 })
 
 // DELETE request
-router.delete("/recipes/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
     const id = req.params.id
     Recipe.findByIdAndDelete(id)
     //if sucessful 
@@ -55,7 +55,7 @@ router.delete("/recipes/:id", (req, res) => {
 })
 
 //SHOW request
-router.get("/recipes/:id", (req, res) => {
+router.get("/:id", (req, res) => {
     const id = req.params.id
     Recipe.findById(id)
         .then(recipe => {
