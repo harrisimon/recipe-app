@@ -8,7 +8,7 @@ const path = require("path") // import path module
 const morgan = require("morgan") // import morgan
 const middleware = require('./utils/middlware')
 const RecipeRouter = require('./controllers/recipeControllers')
-
+const UserRouter = require('./controllers/userControllers')
 // const Recipe = require('./models/recipe')
 
 
@@ -32,6 +32,7 @@ app.get("/", (req, res) => {
 })
 
 app.use('/recipe', RecipeRouter)
+app.use('/users', UserRouter)
 
 //////////////////////////////////
 // Server listener
