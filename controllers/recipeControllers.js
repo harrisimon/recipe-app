@@ -2,7 +2,7 @@
 // Import Dependencies
 ////////////////////////////////////////
 const express = require("express")
-const Recipe = require("../models/fruit")
+const Recipe = require("../models/recipe")
 
 /////////////////////////////////////////
 // Create Router
@@ -12,20 +12,6 @@ const router = express.Router()
 /////////////////////////////////////////////
 // Routes
 /////////////////////////////////////////////
-// SEED route
-router.get("/recipes/seed", (req, res) => {
-    const startRecipes = [
-        {name: "Nachos",ingredients: [{name: "tortillas",amount: 8}], isNaturallyGF: true },
-        {name: "Pizza",ingredients: [{name: "marinara",amount: 5}], isNaturallyGF: false },
-    ]
-    Recipe.deleteMany({})
-        .then(() => {
-            Recipe.create(startRecipes)
-            .then(data => {
-                res.json(data)
-            })
-        })
-})
 
 // GET request
 router.get("/recipes", (req, res) => {

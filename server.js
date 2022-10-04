@@ -1,10 +1,15 @@
+/////////////////////////////////
+// Dependencies ////////////
+
 require("dotenv").config() // Load ENV Variables
 const express = require("express") // import express
-const morgan = require("morgan") // import morgan
+
 const path = require("path") // import path module
+const morgan = require("morgan") // import morgan
+const middleware = require('./utils/middlware')
+const RecipeRouter = require('./controllers/recipeControllers')
 
-
-const Recipe = require('./models/recipe')
+// const Recipe = require('./models/recipe')
 
 
 
@@ -15,22 +20,18 @@ const app = express()
 //Middleware
 ///////////////////////////////////////
 
-app.use(morgan("tiny"))
-app.use(express.urlencoded({extended: true}))
-app.use(express.static("public"))
-app.use(express.json())
+middleware(app)
 
 
 /////////////////////////////////
-// ROUTES aka where I get my kicks
+// Home route
 ////////////////////////////////
-
 
 app.get("/", (req, res) => {
     res.send("Your server is running, check the fridge too")
 })
 
-
+app.use('/recipe', RecipeRouter)
 
 //////////////////////////////////
 // Server listener
