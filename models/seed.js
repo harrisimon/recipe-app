@@ -15,8 +15,8 @@ const db = mongoose.connection
 db.on('open', () => {
     // seed recipes
     const startRecipes = [
-        {name: "Nachos",ingredients: [{name: "tortillas",amount: 8}], isNaturallyGF: true },
-        {name: "Pizza",ingredients: [{name: "marinara",amount: 5}], isNaturallyGF: false },
+        {name: "Nachos",ingredients: [{name: "tortillas",amount: 8, measurement: "handfuls"}], isNaturallyGF: true },
+        {name: "Pizza",ingredients: [{name: "marinara",amount: 5, measurement: "cups"}], isNaturallyGF: false },
     ]
         //delete existing seeds
       Recipe.deleteMany({})
