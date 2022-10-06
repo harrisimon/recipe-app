@@ -13,7 +13,7 @@ const middleware = require('./utils/middleware')
 
 ///////////////////////
 // Express object
-const app = express()
+const app = require("liquid-express-views")(express())
 
 ////////////////////////////////////////
 //Middleware
@@ -26,10 +26,10 @@ middleware(app)
 ////////////////////////////////
 
 app.get("/", (req, res) => {
-    res.send("Your server is running, check the fridge too")
+    res.render('index.liquid')
 })
 
-app.use('/recipes', RecipeRouter)
+app.use('/recipe', RecipeRouter)
 app.use('/users', UserRouter)
 app.use('/rating', RatingRouter)
 

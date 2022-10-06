@@ -1,0 +1,35 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+    <div class="container-sm">
+        <form action="/recipe" method="POST">
+            <fieldset>
+                <legend>Create New Fruit</legend>
+                <label class="form-label">Name: </label>
+                    <input 
+                        type="text" 
+                        name="name"
+                        placeholder="enter recipe name"
+                        class="form-control"
+                    >
+                <label class="form-label">Color:</label>
+                    <input 
+                        type="text" 
+                        name="color" 
+                        placeholder="enter ingredient"
+                        class="form-control"
+                    >
+                <label class="form-label">Is Gluten Free:</label>
+                    <input 
+                        type="checkbox" 
+                        name="isNaturallyGF"
+                        class="form-check-input"
+                    >
+            </fieldset>
+            <input 
+                type="submit" 
+                value="Create New Fruit"
+                class="btn btn-success"
+            >
+        </form>
+    </div>
+{% endblock %}

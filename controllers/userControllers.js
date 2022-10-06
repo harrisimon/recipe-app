@@ -10,9 +10,18 @@ const bcrypt = require('bcryptjs')
 const router = express.Router()
 
 /////////////////////////////////
+
+//GET route for sign up
+// renders the signup page
+router.get('/signup', (req, res) => {
+    res.render('users/signup')
+})
+
+
 // sign up route
 router.post('/signup', async (req, res) => {
     console.log('initial req.body', req.body)
+
     req.body.password = await bcrypt.hash(
         req.body.password,
         await bcrypt.genSalt(10)
@@ -21,14 +30,21 @@ router.post('/signup', async (req, res) => {
 
     User.create(req.body)
         .then(user => {
-            console.log(user)
-            res.status(201).json({username: user.username})
+            // console.log(user)
+            // res.status(201).json({username: user.username})
+            res.redirect('/users/login')
         })
         .catch(err => {
             console.log(err)
             res.json(err)
         })
 })
+
+// renders the login page
+router.get('/login', (req, res) => {
+    res.render('users/login')
+})
+
 
 //////////////////////////////////
 // login route
@@ -44,7 +60,8 @@ router.post('/login', async (req, res) => {
                     req.session.loggedIn = true
                     req.session.userId = user.id
                     console.log('req.session', req.session)
-                    res.status(201).json({user: user.toObject()})
+                    // res.status(201).json({user: user.toObject()})
+                    res.redirect('/recipe')
                 } else {
                     res.json({error: 'username or password incorrect'})
                 }

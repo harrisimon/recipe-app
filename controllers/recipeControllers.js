@@ -15,15 +15,29 @@ const router = express.Router()
 
 // GET request
 router.get("/", (req, res) => {
+    // console.log("this is the request", req)
+    // in our index route, we want to use mongoose model methods to get our data
     Recipe.find({})
         .populate("rating.author", "username")
         .then(recipe => {
-            res.json({recipe: recipe})
+            const username = req.session.username
+            const loggedIn = req.session.loggedIn
+            const userId = req.session.userId
+            console.log(recipe)
+            res.render('recipes/index', { recipe, username, loggedIn, userId })
         })
         .catch(err => console.log(err))
 })
 
+// GET for new recipe
+// Render form to create a fruit
+router.get('/new', (req, res) => {
+    const username = req.session.username
+    const loggedIn = req.session.loggedIn
+    const userId = req.session.userId
 
+    res.render('recipes/new', { username, loggedIn, userId })
+})
 
 // POST request
 router.post("/", (req, res) => {

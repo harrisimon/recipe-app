@@ -1,0 +1,30 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+<div class="container-sm">
+    <!-- here, we're using method override in order to send a PUT request -->
+    <form action="/recipe/{{ recipe.id }}?_method=PUT" method="POST">
+        <fieldset>
+            <legend>Edit New Fruit</legend>
+            <label class="form-label">Name:</label>
+            <input 
+                type="text" 
+                name="name" 
+                placeholder="enter fruit name"
+                class="form-control"
+                value="{{ recipe.name }}"
+            >
+            
+            <label class="form-label">Is Gluten Free: </label>
+            <input 
+                type="checkbox" 
+                name="isNaturallyGF"
+                class="form-check-input"
+                {% if recipe.isNaturallyGF %}
+                    checked
+                {% endif %}
+            >
+        </fieldset>
+        <input type="submit" class="btn btn-success" value="Edit {{ recipe.name }}">
+    </form>
+</div>
+{% endblock %}
