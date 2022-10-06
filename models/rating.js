@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const ratingSchema = new mongoose.Schema({
     stars : {
         type: Number,
-        required: false
+        required: true
     },
     author: {
         type: mongoose.Schema.Types.ObjectId,

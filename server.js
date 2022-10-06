@@ -7,6 +7,7 @@ const express = require("express") // import express
 const path = require("path") // import path module
 const RecipeRouter = require('./controllers/recipeControllers')
 const UserRouter = require('./controllers/userControllers')
+const RatingRouter = require('./controllers/ratingControllers')
 const middleware = require('./utils/middleware')
 
 
@@ -30,6 +31,7 @@ app.get("/", (req, res) => {
 
 app.use('/recipes', RecipeRouter)
 app.use('/users', UserRouter)
+app.use('/rating', RatingRouter)
 
 //////////////////////////////////
 // Server listener

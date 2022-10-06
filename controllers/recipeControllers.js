@@ -16,21 +16,35 @@ const router = express.Router()
 // GET request
 router.get("/", (req, res) => {
     Recipe.find({})
-    .then(recipe => {
-        res.json({recipe: recipe})
-    })
-    .catch(err => console.log(err))
+        .populate("rating.author", "username")
+        .then(recipe => {
+            res.json({recipe: recipe})
+        })
+        .catch(err => console.log(err))
 })
+
+
 
 // POST request
 router.post("/", (req, res) => {
     req.body.owner = req.session.userId
-    console.log("this is the req.body before adding an owner'", req.body)
+    // console.log("this is the req.body before adding an owner'", req.body)
     Recipe.create(req.body)
+
         .then(recipe => {
             res.status(201).json({recipe: recipe.toObject()})
         })
         .catch(error => console.log(error))
+})
+
+// GET request
+// only recipes logged by user
+router.get('/mine', (req, res) => {
+    Recipe.find({owner: req.session.userId})
+        .then(recipe => {
+            res.status(200).json({recipe: recipe})
+        })
+        .catch(error => res.json(error))
 })
 
 // PUT request
@@ -70,9 +84,9 @@ router.delete("/:id", (req, res) => {
 router.get("/:id", (req, res) => {
     const id = req.params.id
     Recipe.findById(id)
+        .populate("rating.author", "username")
         .then(recipe => {
             res.json({recipe: recipe})
-            res.sendStatus(204)
         })
         .catch(err => console.log(err))
 })

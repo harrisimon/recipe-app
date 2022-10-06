@@ -1,7 +1,8 @@
 const mongoose = require("mongoose")
 const User = require('./user')
-const { Schema, model } = mongoose
+//import rating schema
 const ratingSchema = require('./rating')
+const { Schema, model } = mongoose
 
 //recipe schema
 const ingredientSchema = new Schema({
