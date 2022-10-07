@@ -61,7 +61,7 @@ router.post('/login', async (req, res) => {
                     req.session.userId = user.id
                     console.log('req.session', req.session)
                     // res.status(201).json({user: user.toObject()})
-                    res.redirect('/recipe')
+                    res.redirect('/recipes')
                 } else {
                     res.json({error: 'username or password incorrect'})
                 }

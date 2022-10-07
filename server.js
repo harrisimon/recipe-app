@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
     res.render('index.liquid')
 })
 
-app.use('/recipe', RecipeRouter)
+app.use('/recipes', RecipeRouter)
 app.use('/users', UserRouter)
 app.use('/rating', RatingRouter)
 

@@ -1,9 +1,9 @@
 {% layout 'layout.liquid' %}
 {% block content %}
     <div class="container-sm">
-        <form action="/recipe" method="POST">
+        <form action="/recipes" method="POST">
             <fieldset>
-                <legend>Create New Fruit</legend>
+                <legend>Create New Recipe</legend>
                 <label class="form-label">Name: </label>
                     <input 
                         type="text" 
@@ -11,7 +11,7 @@
                         placeholder="enter recipe name"
                         class="form-control"
                     >
-                <label class="form-label">Color:</label>
+                <label class="form-label">Ingredients:</label>
                     <input 
                         type="text" 
                         name="color" 

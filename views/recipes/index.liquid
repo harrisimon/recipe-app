@@ -17,10 +17,13 @@
                         <p class="card-text"> 
                             This is a recipe for {{item.name}}
                             <br>
-                            {{item.ingredients}}
+                            
                         </p>
-                        <a href="/recipe/{{ recipe.id }}" class="btn btn-info">
-                            View {{ recipe.name }}
+                        {% for ingreds in item.ingredients%}
+                            <p>{{ingreds.name}}</p>
+                            {% endfor %}
+                        <a href="/recipes/{{ item.id }}" class="btn btn-info">
+                            View {{ item.name }}
                         </a>
                     </div>
                 </div>
