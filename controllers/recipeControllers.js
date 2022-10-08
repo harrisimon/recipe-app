@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
     // console.log("this is the request", req)
     // in our index route, we want to use mongoose model methods to get our data
     Recipe.find({})
-        .populate("rating.author", "username")
+
         .then(recipe => {
             const username = req.session.username
             const loggedIn = req.session.loggedIn
@@ -30,12 +30,11 @@ router.get("/", (req, res) => {
 })
 
 // GET for new recipe
-// Render form to create a fruit
 router.get('/new', (req, res) => {
     const username = req.session.username
     const loggedIn = req.session.loggedIn
     const userId = req.session.userId
-
+    
     res.render('recipes/new', { username, loggedIn, userId })
 })
 
@@ -43,10 +42,23 @@ router.get('/new', (req, res) => {
 router.post("/", (req, res) => {
     req.body.isNaturallyGF = req.body.isNaturallyGF === 'on' ? true : false
     req.body.owner = req.session.userId
+    const ingredientName = req.body.ingredientName
+    const ingredientAmount = req.body.ingredientAmount
+    const ingredientMeasurement = req.body.ingredientMeasurement
+    const ingredients = {
+        name: ingredientName,
+        amount: ingredientAmount,
+        measurement: ingredientMeasurement
+    }
+    
     // console.log("this is the req.body before adding an owner'", req.body)
     Recipe.create(req.body)
-
-        .then(recipe => {
+    .then(recipe => {
+            // console.log(req.body)
+            recipe.ingredients.push(ingredients)
+            console.log("look",req.body.ingredients)
+            console.log("here",recipe)
+            recipe.save()
             res.redirect('/recipes')
         })
         .catch(error => console.log(error))
@@ -69,10 +81,18 @@ router.get('/mine', (req, res) => {
 
 // GET request to show the update page
 router.get("/edit/:id", (req, res) => {
-    // const username = req.session.username
-    // const loggedIn = req.session.loggedIn
-    // const userId = req.session.userId
-    res.send('edit page')
+    const username = req.session.username
+    const loggedIn = req.session.loggedIn
+    const userId = req.session.userId
+    const recipeId = req.params.id
+    Recipe.findById(recipeId)
+        .then(fruit => {
+            res.render('recipes/edit', {recipe, username, loggedIn, userId})
+        })
+        .catch(err => {
+            res.redirect(`error?error=${err}`)
+        })
+        // res.send('edit page')
 })
 
 // PUT request
@@ -117,7 +137,7 @@ router.get("/:id", (req, res) => {
         // the second can specify which parts to keep or which to remove
         // .populate("owner", "username")
         // we can also populate fields of our subdocuments
-        .populate("rating.author", "username")
+
         .then(recipe => {
             const username = req.session.username
             const loggedIn = req.session.loggedIn

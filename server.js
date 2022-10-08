@@ -26,12 +26,16 @@ middleware(app)
 ////////////////////////////////
 
 app.get("/", (req, res) => {
-    res.render('index.liquid')
+    if(req.session.loggedIn){
+        res.redirect('/recipes')
+    } else {
+        res.render('index.liquid')
+    }
 })
 
 app.use('/recipes', RecipeRouter)
 app.use('/users', UserRouter)
-app.use('/rating', RatingRouter)
+
 
 //////////////////////////////////
 // Server listener

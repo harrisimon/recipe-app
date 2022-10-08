@@ -19,9 +19,12 @@
                             <br>
                             
                         </p>
+                        <ul>
                         {% for ingreds in item.ingredients%}
-                            <p>{{ingreds.name}}</p>
+                            
+                            <li class="list-group-item">{{ingreds.name}} {{ingreds.amount}} {{ingreds.measurement}}</li>
                             {% endfor %}
+                        </ul>
                         <a href="/recipes/{{ item.id }}" class="btn btn-info">
                             View {{ item.name }}
                         </a>

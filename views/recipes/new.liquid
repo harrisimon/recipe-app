@@ -3,6 +3,7 @@
     <div class="container-sm">
         <form action="/recipes" method="POST">
             <fieldset>
+               
                 <legend>Create New Recipe</legend>
                 <label class="form-label">Name: </label>
                     <input 
@@ -11,11 +12,27 @@
                         placeholder="enter recipe name"
                         class="form-control"
                     >
-                <label class="form-label">Ingredients:</label>
+                <label class="form-label">Ingredient name:</label>
                     <input 
                         type="text" 
-                        name="color" 
+                        name="ingredientName" 
                         placeholder="enter ingredient"
+                        class="form-control"
+                    >
+                <label class="form-label">Amount:</label>
+                   <select class="form-control" id="ingredientAmount" name="ingredientAmount">
+                    <option name="ingredientAmount">1</option>
+                    <option name="ingredientAmount">2</option>
+                    <option name="ingredientAmount">3</option>
+                    <option name="ingredientAmount">4</option>
+                    <option name="ingredientAmount">5</option>
+                    </select>
+
+                 <label class="form-label">Measurement:</label>
+                    <input 
+                        type="text" 
+                        name="ingredientMeasurement" 
+                        placeholder="enter amount"
                         class="form-control"
                     >
                 <label class="form-label">Is Gluten Free:</label>
@@ -27,7 +44,7 @@
             </fieldset>
             <input 
                 type="submit" 
-                value="Create New Fruit"
+                value="Create New Recipe"
                 class="btn btn-success"
             >
         </form>
