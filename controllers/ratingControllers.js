@@ -25,9 +25,11 @@ router.post('/:recipeId', (req, res) => {
             return recipe.save()
         })
         .then(recipe => {
-            res.status(200).json({recipe: recipe})
+            res.redirect(`/recipes/${recipe.id}`)
+            // res.status(200).json({recipe: recipe})
         })
-        .catch(error => console.log(error))
+        // .catch(error => console.log(error))
+        .catch(err => res.redirect(`/error?error=${err}`))
 
 })
 
@@ -48,16 +50,19 @@ router.delete('/delete/:recipeId/:ratingId', (req, res) => {
                 if(rating.author == req.session.userId){
                     rating.remove()
                     recipe.save()
-                    res.sendStatus(204)
+                    // res.sendStatus(204)
+                    res.redirect(`/recipes/${recipe.id}`)
                 } else {
                     res.sendStatus(401)
                 }
             } else {
-                res.sendStatus(401)
+                // res.sendStatus(401)
+                const err = 'you%20are%20not%20authorized%20for%20this%20action'
+                res.redirect(`/error?error=${err}`)
             }
 
         })
-        .catch(error => console.log(error))
+        .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 module.exports = router

@@ -1,26 +1,15 @@
 {% layout 'layout.liquid' %}
 {% block content %}
     <div class="container-md">
-        <!-- you can do fun things like inline style with properties of your rendered object -->
-        <!-- <article style="background-color:{{fruit.color}}"> -->
         <article>
             <h2>
                 {{ recipe.name }} - 
                 
             </h2>
             <h3></h3>
-            {% if recipe.owner == userId  %}
-                <div class="btn-group">
-                    <a  class="btn btn-primary" href="/recipes/edit/{{recipe.id}}">Edit</a>
-                    <form action="/recipes/{{recipe._id}}?_method=DELETE" method="POST">
-                        <input type="submit" value="Delete" class="btn btn-danger">
-                    </form>
-                </div>
-            {% endif %}
+            
         </article>
         <div class="card" style="width: 18rem;">
-                    <!-- card header -> name of fruit -->
-                    <!-- card body -> ready to eat as title, color as text-->
                     <h5 class="card-header">{{recipe.name}}</h5>
                     <div class="card-body">
                         
@@ -35,20 +24,33 @@
                             <li class="list-group-item">{{ingreds.name}} {{ingreds.amount}} {{ingreds.measurement}}</li>
                             {% endfor %}
                         </ul>
-                        <a href="/recipes/{{ item.id }}" class="btn btn-info">
-                            View {{ item.name }}
-                        </a>
+                        
                     </div>
                 </div>
+                {% if recipe.owner == userId  %}
+                <div class="btn-group">
+                    <a  class="btn btn-primary" href="/recipes/edit/{{recipe.id}}">Edit</a>
+                    <form action="/recipes/{{recipe._id}}?_method=DELETE" method="POST">
+                        <input type="submit" value="Delete" class="btn btn-danger">
+                    </form>
+                </div>
+            {% endif %}
         <div class="col-md-6">
-            <form action="/ratings/{{recipe.id}}" method="POST">
+            {%- comment -%} <form action="/ratings/{{recipe.id}}" method="POST">
                 <fieldset>
                     <legend>Add Rating</legend>
-                    <label class="form-label">Rating: </label>
-                    <input type="text" class="form-control" name="note" placeholder="enter comment here...">
+
                 </fieldset>
-                <input type="submit" class="btn btn-success" value="Add Rating">
-            </form>
+                <select class="form-control" id="rating" name="rating">
+                    <option name="rating">1</option>
+                    <option name="rating">2</option>
+                    <option name="rating">3</option>
+                    <option name="rating">4</option>
+                    <option name="rating">5</option>
+                    
+                    </select>
+                    <input  type="submit" class="btn btn-success" action="/rating/{{recipe.id}}" method="POST">
+            </form> {%- endcomment -%}
         </div>
     </div>
 {% endblock %}

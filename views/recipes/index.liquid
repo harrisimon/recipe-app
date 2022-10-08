@@ -1,16 +1,14 @@
-<!-- we're serving block content in layout.liquid -->
-<!-- so we need to inform all our blocks(files) -->
+
 {% layout 'layout.liquid'%}
-<!-- here we start our block content -->
+
 {% block content %}
     <div >
         <h2 class="display-6">All Recipes</h2>
         <div class="row">
-            <!-- this uses liquid tags to loop over the fruits! -->
+
             {% for item in recipe %}
                 <div class="card" style="width: 18rem;">
-                    <!-- card header -> name of fruit -->
-                    <!-- card body -> ready to eat as title, color as text-->
+   
                     <h5 class="card-header">{{item.name}}</h5>
                     <div class="card-body">
                         

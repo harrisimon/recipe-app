@@ -1,6 +1,8 @@
 const mongoose = require("mongoose")
 const User = require('./user')
 //import rating schema
+const rating = require('./rating')
+const ratingSchema = require("./rating")
 
 const { Schema, model } = mongoose
 
@@ -18,7 +20,8 @@ const recipeSchema = new Schema({
     owner: {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    rating: [ratingSchema]
 }, { timestamps: true})
 
 

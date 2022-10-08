@@ -2,18 +2,39 @@
 {% block content %}
 <div class="container-sm">
     <!-- here, we're using method override in order to send a PUT request -->
-    <form action="/recipe/{{ recipe.id }}?_method=PUT" method="POST">
+    <form action="/recipes/{{recipe.id}}?_method=PUT" method="POST">
         <fieldset>
-            <legend>Edit New Fruit</legend>
-            <label class="form-label">Name:</label>
-            <input 
-                type="text" 
-                name="name" 
-                placeholder="enter fruit name"
-                class="form-control"
-                value="{{ recipe.name }}"
-            >
+            <legend>Edit Recipe</legend>
+            <label class="form-label">Name:<h1>{{recipe.name}}</h1> </label>
+            <hr>
+            <label class="form-label">Ingredient name:</label>
+            {%for item in recipe.ingredients%}
+                    <input 
+                        type="text" 
+                        name="ingredientName" 
+                        placeholder="Ingredient Name"
+                        class="form-control"
+                        value="{{item.name}}"
+                    >
+                
             
+            <label class="form-label">Amount:</label>
+                   <select class="form-control" defaultValue={{item.amount}}id="ingredientAmount" name="ingredientAmount">
+                    <option name="ingredientAmount">1</option>
+                    <option name="ingredientAmount">2</option>
+                    <option name="ingredientAmount">3</option>
+                    <option name="ingredientAmount">4</option>
+                    <option name="ingredientAmount">5</option>
+                    </select>
+            <label class="form-label">Measurement:</label>
+                    <input 
+                        value="{{item.measurement}}"
+                        type="text" 
+                        name="ingredientMeasurement" 
+                        placeholder="enter amount"
+                        class="form-control"
+                    >
+            {%endfor%}
             <label class="form-label">Is Gluten Free: </label>
             <input 
                 type="checkbox" 

@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
     // console.log("this is the request", req)
     // in our index route, we want to use mongoose model methods to get our data
     Recipe.find({})
-
+        .populate('rating.author', "username")
         .then(recipe => {
             const username = req.session.username
             const loggedIn = req.session.loggedIn
@@ -51,17 +51,17 @@ router.post("/", (req, res) => {
         measurement: ingredientMeasurement
     }
     
-    // console.log("this is the req.body before adding an owner'", req.body)
+
     Recipe.create(req.body)
-    .then(recipe => {
-            // console.log(req.body)
-            recipe.ingredients.push(ingredients)
-            console.log("look",req.body.ingredients)
-            console.log("here",recipe)
-            recipe.save()
-            res.redirect('/recipes')
-        })
-        .catch(error => console.log(error))
+        .then(recipe => {
+                recipe.ingredients.push(ingredients)
+                recipe.save()
+                const userName = req.session.username
+                const loggedIn = req.session.loggedIn
+                const userId = req.session.userId
+                res.redirect('/recipes')
+            })
+        .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 // GET request
@@ -85,35 +85,59 @@ router.get("/edit/:id", (req, res) => {
     const loggedIn = req.session.loggedIn
     const userId = req.session.userId
     const recipeId = req.params.id
+    
     Recipe.findById(recipeId)
-        .then(fruit => {
+        .then(recipe => {
+            console.log(recipe)
             res.render('recipes/edit', {recipe, username, loggedIn, userId})
         })
         .catch(err => {
             res.redirect(`error?error=${err}`)
         })
-        // res.send('edit page')
+
 })
 
 // PUT request
 router.put("/:id", (req, res) => {
+    req.body.isNaturallyGF = req.body.isNaturallyGF === 'on' ? true : false
     const id = req.params.id
+    
+    const ingredientName = req.body.ingredientName
+    const ingredientAmount = req.body.ingredientAmount
+    const ingredientMeasurement = req.body.ingredientMeasurement
+    const ingredients = {
+        name: ingredientName,
+        amount: ingredientAmount,
+        measurement: ingredientMeasurement
+    }
+    
     Recipe.findById(id)
-    .then(recipe => {
-        if(recipe.owner == req.session.userId){
-            console.log('the recipe from update', recipe)
-            res.sendStatus(204)
+        .then(recipe => {
+            console.log(id)
+            // if(recipe.owner == req.session.userId){
+
+            // res.sendStatus(204)
+            // recipe.ingredients.push(ingredients)
+            console.log(ingredients)
+            recipe.ingredients.splice(0, 1, ingredients)
+            recipe.save()
             return recipe.updateOne(req.body)
-        } else {
-            res.sendStatus(401)
-        } 
+            // } else {
+                // res.sendStatus(401)
+            // }
         })
-        .catch(err => console.log(err))
-})
+    .then(() => {
+        // console.log('returned from update promise', data)
+        res.redirect(`/recipes/${id}`)
+    })
+    .catch(err => 
+        res.redirect(`/error?error=${err}`))
+        })
+
 
 // DELETE request
 router.delete('/:id', (req, res) => {
-    // get the fruit id
+
     const id = req.params.id
 
     // delete and REDIRECT
@@ -131,13 +155,14 @@ router.delete('/:id', (req, res) => {
 router.get("/:id", (req, res) => {
     const id = req.params.id
 
+
     Recipe.findById(id)
         // populate will provide more data about the document that is in the specified collection
         // the first arg is the field to populate
         // the second can specify which parts to keep or which to remove
         // .populate("owner", "username")
         // we can also populate fields of our subdocuments
-
+        .populate('rating.author', 'username')
         .then(recipe => {
             const username = req.session.username
             const loggedIn = req.session.loggedIn

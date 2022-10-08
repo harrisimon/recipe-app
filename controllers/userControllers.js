@@ -26,7 +26,7 @@ router.post('/signup', async (req, res) => {
         req.body.password,
         await bcrypt.genSalt(10)
     )
-    console.log('req after has', req.body)
+    console.log('req after hash', req.body)
 
     User.create(req.body)
         .then(user => {
@@ -36,7 +36,7 @@ router.post('/signup', async (req, res) => {
         })
         .catch(err => {
             console.log(err)
-            res.json(err)
+            res.redirect(`/error?error=username%20already%20taken%20`)
         })
 })
 
@@ -63,15 +63,15 @@ router.post('/login', async (req, res) => {
                     // res.status(201).json({user: user.toObject()})
                     res.redirect('/recipes')
                 } else {
-                    res.json({error: 'username or password incorrect'})
+                    res.redirect(`/error?error=username%20or%20password%20incorrect`)
                 }
             } else {
-                res.json({error: 'user does not exist'})
+                res.redirect(`/error?error=user%20does%20not%20exist`)
             }
         })
         .catch(err => {
-            console.log(err)
-            res.json(err)
+            // console.log(err)
+            res.redirect(`/error?error=${err}`)
         })
 })
 
