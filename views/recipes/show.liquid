@@ -3,7 +3,7 @@
     <div class="container-md">
         <article>
             <h2>
-                {{ recipe.name }} - 
+                {{ recipe.name }} 
                 
             </h2>
             <h3></h3>
@@ -14,7 +14,7 @@
                     <div class="card-body">
                         
                         <p class="card-text"> 
-                            This is a recipe for {{recipe.name}}
+                            Here are the ingredients for {{recipe.name}}
                             <br>
                             
                         </p>
@@ -24,7 +24,9 @@
                             <li class="list-group-item">{{ingreds.name}} {{ingreds.amount}} {{ingreds.measurement}}</li>
                             {% endfor %}
                         </ul>
-                        
+                        {%if recipe.isNaturallyGF == true%}
+                        <p>This recipe is Gluten Free</p>
+                        {%endif%}
                     </div>
                 </div>
                 {% if recipe.owner == userId  %}
@@ -35,22 +37,40 @@
                     </form>
                 </div>
             {% endif %}
-        <div class="col-md-6">
-            {%- comment -%} <form action="/ratings/{{recipe.id}}" method="POST">
-                <fieldset>
-                    <legend>Add Rating</legend>
+        {%- comment -%} <div class="col-md-6"> {%- endcomment -%}
+        {% if loggedIn %}
+            <div class="col-md-6">
+                <form action="/ratings/{{fruit.id}}" method="POST">
+                    <fieldset>
+                        <legend>Add Rating</legend>
+                        <label></label>                   
+                        <select class="form-control" id="rating" name="rating">
+                            {%for i  in (1..5)%}}
+                            <option name="rating">{{i}}</option>
 
-                </fieldset>
-                <select class="form-control" id="rating" name="rating">
-                    <option name="rating">1</option>
-                    <option name="rating">2</option>
-                    <option name="rating">3</option>
-                    <option name="rating">4</option>
-                    <option name="rating">5</option>
-                    
-                    </select>
-                    <input  type="submit" class="btn btn-success" action="/rating/{{recipe.id}}" method="POST">
-            </form> {%- endcomment -%}
+                            {%endfor%}
+                        </select>
+                    </fieldset>
+                    <input class="btn btn-success" type="submit" value="Add">
+                </form>
+            </div>
+        {% else %}
+            <div class="col-md-6">
+                <small>If you'd like to rate this recipe for {{recipe.name}}</small>
+            </div>
+        {% endif %}
+        <hr>
+        {% if recipe.rating.length > 0%}
+            <div class="container-sm justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    {% for comment in fruit.comments %}
+                        {% render '../rating.liquid', rating: rating, userId: userId %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <small>This recipe is not rated</small>
+        {% endif %}
         </div>
     </div>
 {% endblock %}

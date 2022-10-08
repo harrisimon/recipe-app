@@ -85,7 +85,7 @@ router.get("/edit/:id", (req, res) => {
     const loggedIn = req.session.loggedIn
     const userId = req.session.userId
     const recipeId = req.params.id
-    
+    console.log(req.body)
     Recipe.findById(recipeId)
         .then(recipe => {
             console.log(recipe)

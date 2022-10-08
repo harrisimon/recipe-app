@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 
 app.use('/recipes', RecipeRouter)
 app.use('/users', UserRouter)
-app.use('/rating', RatingRouter)
+app.use('/ratings', RatingRouter)
 
 app.get('/error', (req, res) => {
     // get session variables

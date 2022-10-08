@@ -21,13 +21,11 @@
                     >
                 <label class="form-label">Amount:</label>
                    <select class="form-control" id="ingredientAmount" name="ingredientAmount">
-                    <option name="ingredientAmount">1</option>
-                    <option name="ingredientAmount">2</option>
-                    <option name="ingredientAmount">3</option>
-                    <option name="ingredientAmount">4</option>
-                    <option name="ingredientAmount">5</option>
-                    </select>
+                    {%for i  in (1..100)%}}
+                    <option name="ingredientAmount">{{i}}</option>
 
+                    {%endfor%}
+                    </select>
                  <label class="form-label">Measurement:</label>
                     <input 
                         type="text" 

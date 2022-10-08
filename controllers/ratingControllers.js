@@ -13,7 +13,10 @@ const router = express.Router()
 // POST / only loggedIn users can post ratings
 router.post('/:recipeId', (req, res) => {
     const recipeId = req.params.recipeId
-
+    const stars = req.body.rating
+    const rating = {
+        stars: stars
+    }
     if(req.session.loggedIn){
         req.body.author = req.session.userId
     } else {
@@ -21,7 +24,7 @@ router.post('/:recipeId', (req, res) => {
     }
     Recipe.findById(recipeId)
         .then(recipe => {
-            recipe.rating.push(req.body)
+            recipe.rating.push(rating)
             return recipe.save()
         })
         .then(recipe => {

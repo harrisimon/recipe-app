@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 
-const ratingSchema = new mongoose.Schema({
+const {Schema}= mongoose
+const ratingSchema = new Schema({
     stars : {
         type: Number,
         required: true,
@@ -8,7 +9,7 @@ const ratingSchema = new mongoose.Schema({
         max: 5
     },
     author: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
     }

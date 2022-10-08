@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const User = require('./user')
 //import rating schema
-const rating = require('./rating')
+// const rating = require('./rating')
 const ratingSchema = require("./rating")
 
 const { Schema, model } = mongoose
