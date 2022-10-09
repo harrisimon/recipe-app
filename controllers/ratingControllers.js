@@ -15,13 +15,15 @@ router.post('/:recipeId', (req, res) => {
     const recipeId = req.params.recipeId
     const stars = req.body.rating
     const rating = {
-        stars: stars
+        stars: stars,
+        author: req.session.userId
     }
     if(req.session.loggedIn){
         req.body.author = req.session.userId
     } else {
         res.sendStatus(401)
     }
+    console.log(recipeId)
     Recipe.findById(recipeId)
         .then(recipe => {
             recipe.rating.push(rating)

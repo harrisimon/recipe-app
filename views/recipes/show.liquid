@@ -40,7 +40,7 @@
         {%- comment -%} <div class="col-md-6"> {%- endcomment -%}
         {% if loggedIn %}
             <div class="col-md-6">
-                <form action="/ratings/{{fruit.id}}" method="POST">
+                <form action="/ratings/{{recipe.id}}" method="POST">
                     <fieldset>
                         <legend>Add Rating</legend>
                         <label></label>                   
@@ -51,19 +51,19 @@
                             {%endfor%}
                         </select>
                     </fieldset>
-                    <input class="btn btn-success" type="submit" value="Add">
+                    <input class="btn btn-success" type="submit" value="Add Rating">
                 </form>
             </div>
         {% else %}
             <div class="col-md-6">
-                <small>If you'd like to rate this recipe for {{recipe.name}}</small>
+                <small>If you'd like to rate this recipe for {{recipe.name}} please log in</small>
             </div>
         {% endif %}
         <hr>
         {% if recipe.rating.length > 0%}
             <div class="container-sm justify-content-center">
                 <div class="col-md-8 col-lg-6">
-                    {% for comment in fruit.comments %}
+                    {% for rating in recipe.rating %}
                         {% render '../rating.liquid', rating: rating, userId: userId %}
                     {% endfor %}
                 </div>

@@ -86,6 +86,7 @@ router.get("/edit/:id", (req, res) => {
     const userId = req.session.userId
     const recipeId = req.params.id
     console.log(req.body)
+    .populate('rating.author', 'username')
     Recipe.findById(recipeId)
         .then(recipe => {
             console.log(recipe)
@@ -154,7 +155,7 @@ router.delete('/:id', (req, res) => {
 //SHOW request
 router.get("/:id", (req, res) => {
     const id = req.params.id
-
+   
 
     Recipe.findById(id)
         // populate will provide more data about the document that is in the specified collection
@@ -162,12 +163,13 @@ router.get("/:id", (req, res) => {
         // the second can specify which parts to keep or which to remove
         // .populate("owner", "username")
         // we can also populate fields of our subdocuments
+        
         .populate('rating.author', 'username')
         .then(recipe => {
             const username = req.session.username
             const loggedIn = req.session.loggedIn
             const userId = req.session.userId
-            // res.json({ fruit: fruit })
+
             res.render('recipes/show', { recipe, username, loggedIn, userId })
         })
         .catch(err => console.log(err))
