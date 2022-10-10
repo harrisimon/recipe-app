@@ -64,7 +64,7 @@
             <div class="container-sm justify-content-center">
                 <div class="col-md-8 col-lg-6">
                     {% for rating in recipe.rating %}
-                        {% render '../rating.liquid', rating: rating, userId: userId %}
+                        {% render '../rating.liquid', rating: rating, userId: userId, recipe: recipe %}
                     {% endfor %}
                 </div>
             </div>

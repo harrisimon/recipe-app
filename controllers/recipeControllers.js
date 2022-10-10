@@ -147,8 +147,8 @@ router.delete('/:id', (req, res) => {
             // if the delete is successful, send the user back to the index page
             res.redirect('/recipes')
         })
-        .catch(error => {
-            res.json({ error })
+        .catch(err => {
+            res.redirect(`/error?error=${err}`)
         })
 })
 
@@ -166,6 +166,7 @@ router.get("/:id", (req, res) => {
         
         .populate('rating.author', 'username')
         .then(recipe => {
+          
             const username = req.session.username
             const loggedIn = req.session.loggedIn
             const userId = req.session.userId
